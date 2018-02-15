@@ -19,6 +19,7 @@ import { PostsPage } from '../pages/posts/posts';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import {AngularFireAuthModule} from 'angularfire2/auth'
 
 
 
@@ -43,7 +44,8 @@ var config = {
     BrowserModule,
     AngularFireModule.initializeApp(config),
     IonicModule.forRoot(MyApp),    
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
