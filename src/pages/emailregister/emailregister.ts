@@ -30,7 +30,7 @@ export class EmailregisterPage {
 
   async loginEmail(user:User){
      try{
-       const result = this.afAuth.auth.signInWithEmailAndPassword(user.email,user.password);
+       const result = this.afAuth.auth.signInWithEmailAndPassword(user.email , user.password);
        console.log(result);
        if(result){
          this.navCtrl.push(HomePage);

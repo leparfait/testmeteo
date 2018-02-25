@@ -20,6 +20,7 @@ import { PostsPage } from '../pages/posts/posts';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {AngularFireAuthModule} from 'angularfire2/auth'
+import { InscriptionPage } from '../pages/inscription/inscription';
 
 
 
@@ -35,7 +36,7 @@ var config = {
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,LoginPage,RegisterPage,EmailregisterPage,FacebookRegisterPage,ChatPage,PostsPage,
+    AboutPage,LoginPage,RegisterPage,EmailregisterPage,FacebookRegisterPage,ChatPage,PostsPage,InscriptionPage,
     ContactPage,
     HomePage,
     TabsPage,
@@ -50,7 +51,7 @@ var config = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,LoginPage,RegisterPage,EmailregisterPage,FacebookRegisterPage,ChatPage,PostsPage,
+    AboutPage,LoginPage,RegisterPage,EmailregisterPage,FacebookRegisterPage,ChatPage,PostsPage,InscriptionPage,
     ContactPage,
     HomePage,
     TabsPage

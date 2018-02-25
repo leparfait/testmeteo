@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { InscriptionPage } from '../inscription/inscription';
 
 @Component({
   selector: 'page-home',
@@ -11,4 +12,7 @@ export class HomePage {
 
   }
 
+  inscription(){
+    this.navCtrl.push(InscriptionPage);
+  }
 }

@@ -1,17 +1,52 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Home</ion-title>
+  <ion-navbar color="darkness">
+    <ion-title>Acceuil</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+  <ion-grid>
+    <ion-row class="logo">
+      <img src="/assets/imgs/logo.png" height="50px" width="50px" img-circle/> 
+    </ion-row>
+    <ion-row class="bienvenue">
+      Bienvenue sur Vient Vendre
+    </ion-row><br>
+    <ion-row>
+        <ion-item>
+            <ion-label stacked>Login:</ion-label>
+            <ion-input type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Password:</ion-label>
+            <ion-input type="password"></ion-input>
+        </ion-item><br>
+
+      <button class="buttton-connexion" ion-button  color="darkness" block>Se connecter</button>
+      <button class="button-inscription" ion-button outline block (click)="inscription()">S'inscrire</button>
+
+      <div >
+         <a href="" class="linkforget">Mot de passe oublié ?</a>
+      </div>  
+    </ion-row><br>
+
+    <ion-row>
+      <div class="ou" >
+        <strong>Ou</strong>
+      </div>     
+    </ion-row>
+
+    <ion-row>
+        <button class="buttton-google" icon-left ion-button  color="google" block>
+          <ion-icon name="logo-google"></ion-icon>
+          Se connecter avec Google
+        </button>
+        
+        <button ion-button icon-left class="button-facebook" color="facebook" block>
+            <ion-icon name="logo-facebook"></ion-icon>
+            Se connecter avec facebook
+        </button>
+    </ion-row>
+  </ion-grid>
 </ion-content>
