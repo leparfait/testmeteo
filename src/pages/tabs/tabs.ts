@@ -5,13 +5,14 @@ import { ContactPage } from '../contact/contact';
 //import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
 import { HomePage } from '../home/home';
+import { InscriptionPage } from '../inscription/inscription';
 
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
 
-  tab1Root = HomePage;
+  tab1Root = InscriptionPage;//HomePage;
   tab2Root = AboutPage;
   tab3Root = ContactPage;
 

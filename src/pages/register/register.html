@@ -6,23 +6,31 @@
 -->
 <ion-header>
 
-  <ion-navbar color="primary">
-    <ion-title>Register Email</ion-title>
+  <ion-navbar color="darkness">
+    <ion-title>Création de Compte</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-    <ion-item>
-        <ion-label floating>Email:</ion-label>
-        <ion-input type="text" [(ngModel)]="user.email" ></ion-input>
+    <ion-grid>
+        <ion-row class="logo">
+          <img src="/assets/imgs/logo.png" height="50px" width="50px" img-circle/> 
+        </ion-row>
+        <ion-row class="bienvenue">
+          Créer votre compte
+        </ion-row><br>
+      <ion-item>
+        <ion-label stacked>Email:</ion-label>
+        <ion-input type="email" [(ngModel)]="user.email" ></ion-input>
       </ion-item>
      
       <ion-item>
-         <ion-label floating>Mot de passe:</ion-label>
+         <ion-label stacked>Mot de passe:</ion-label>
          <ion-input type="password" [(ngModel)]="user.password" ></ion-input>
        </ion-item>
      
-       <button ion-button (click)="registerEmail(user)" primary >Register</button>
+       <button ion-button (click)="registerEmail(user)" color="darkness" >Enregistrer</button>
+    </ion-grid>
 </ion-content>

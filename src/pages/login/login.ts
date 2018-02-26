@@ -19,8 +19,8 @@ export class LoginPage {
   
   username:string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController
-              ) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+     public alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {

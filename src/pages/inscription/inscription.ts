@@ -3,6 +3,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { PhotoProfilPage } from '../photo-profil/photo-profil';
 import { User } from '../../model/user.model';
 import { InscriptionService } from '../../service/inscription.service';
+import { Profile } from '../../model/profil.model';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { PostsPage } from '../posts/posts';
 
 /**
  * Generated class for the InscriptionPage page.
@@ -18,43 +22,21 @@ import { InscriptionService } from '../../service/inscription.service';
 })
 export class InscriptionPage {
 
-    user : User;
-    nom: string;
-    login: string;
-    email: string;
-    password : string;
-    ville: string;
-    numero: number;
-    photo: any;
-    isAdmin: boolean; 
- 
-    result: any;
-    
+  profile = { } as Profile;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public inscriptonService : InscriptionService) {
+              public afAuth : AngularFireAuth, public db:AngularFireDatabase) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad InscriptionPage');
   }
 
-  onInscription(){
-   this.user.nom = this.nom;
-   this.user.email = this.email;
-   this.user.login = this.login;
-   this.user.password = this.password;
-   this.user.ville = this.ville;
-   this.user.numero = this.numero;
-   this.user.isAdmin = false;
-  // this.user.photo = this.photo
-  try{
-      this.result = this.inscriptonService.inscription(this.user);
-  }catch(e){
-    console.log(e);
-  }
-   if(this.result)  this.navCtrl.push(PhotoProfilPage);
-
+  saveProfil(){
+    this.afAuth.authState.take(1).subscribe(auth =>{
+      this.db.object('user-profile/${auth.uid}').set(this.profile)
+      .then(()=> this.navCtrl.setRoot(PostsPage));
+    })
   }
   
 }

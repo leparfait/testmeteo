@@ -14,16 +14,16 @@
     </ion-row><br>
     <ion-row>
         <ion-item>
-            <ion-label stacked>Login:</ion-label>
-            <ion-input type="text" [(ngModel)]="login" ></ion-input>
+            <ion-label stacked>Email:</ion-label>
+            <ion-input type="email" [(ngModel)]="user.email" ></ion-input>
         </ion-item>
 
         <ion-item>
             <ion-label stacked>Mot de passe:</ion-label>
-            <ion-input type="password" [(ngModel)]="login" ></ion-input>
+            <ion-input type="password" [(ngModel)]="user.password" ></ion-input>
         </ion-item><br>
 
-      <button class="buttton-connexion" ion-button  color="darkness" block (click)="connexion()">
+      <button class="buttton-connexion" ion-button  color="darkness" block (click)="connexion(user)">
         Se connecter</button>
       <button class="button-inscription" ion-button outline block (click)="inscription()">
         S'inscrire</button>
