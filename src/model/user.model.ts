@@ -7,6 +7,7 @@ export interface User {
     email: string;
     password : string;
     ville: string;
+    numero: number;
     photo: any;
     isAdmin: boolean; 
 }

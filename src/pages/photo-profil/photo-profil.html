@@ -1,0 +1,69 @@
+<!--
+  Generated template for the PhotoProfilPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="darkness">
+    <ion-title>Photo de profil</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <div class="dropzone" 
+    dropZone
+    (hovered)="toggleHover($event)"
+    (dropped)="startUpload($event)"
+    [class.hovering]="isHovering">
+
+
+    <h3>Choissiser votre photo</h3>
+
+    <div class="file">
+       <label class="file-label">
+
+
+       <input class="file-input" type="file" (change)="startUpload($event.target.files)">
+
+
+         <span class="file-cta">
+           <span class="file-icon">
+             <i class="fa fa-upload"></i>
+           </span>
+         </span>
+       </label>
+     </div>
+</div>
+
+<div *ngIf="percentage | async as pct">
+
+    <progress class="progress is-info" 
+              [value]="pct" 
+              max="100">        
+    </progress>
+  
+    {{ pct | number }}%
+  
+  </div>
+  
+  
+  <!-- <div *ngIf="snapshot | async as snap"> -->
+    
+  
+    <div *ngIf="downloadURL | async as url">
+      <h3>Results!</h3>
+      <img [src]="url"><br>
+      <a [href]="url" target="_blank" rel="noopener">Download Me!</a>
+    </div> 
+  
+    <button (click)="task.pause()" class="button is-warning" [disabled]="!isActive(snap)">Pause</button>
+    <button (click)="task.cancel()" class="button is-danger" [disabled]="!isActive(snap)">Cancel</button>
+    <button (click)="task.resume()" class="button is-info"   [disabled]="!(snap?.state === 'paused')">Resume</button>
+  
+  <!-- </div> -->
+
+</ion-content>

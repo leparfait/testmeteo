@@ -15,16 +15,18 @@
     <ion-row>
         <ion-item>
             <ion-label stacked>Login:</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" [(ngModel)]="login" ></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label stacked>Password:</ion-label>
-            <ion-input type="password"></ion-input>
+            <ion-label stacked>Mot de passe:</ion-label>
+            <ion-input type="password" [(ngModel)]="login" ></ion-input>
         </ion-item><br>
 
-      <button class="buttton-connexion" ion-button  color="darkness" block>Se connecter</button>
-      <button class="button-inscription" ion-button outline block (click)="inscription()">S'inscrire</button>
+      <button class="buttton-connexion" ion-button  color="darkness" block (click)="connexion()">
+        Se connecter</button>
+      <button class="button-inscription" ion-button outline block (click)="inscription()">
+        S'inscrire</button>
 
       <div >
          <a href="" class="linkforget">Mot de passe oublié ?</a>
@@ -38,12 +40,12 @@
     </ion-row>
 
     <ion-row>
-        <button class="buttton-google" icon-left ion-button  color="google" block>
+        <button class="buttton-google" icon-left ion-button  color="google" block (click)="loginWithGoogle()">
           <ion-icon name="logo-google"></ion-icon>
           Se connecter avec Google
         </button>
         
-        <button ion-button icon-left class="button-facebook" color="facebook" block>
+        <button ion-button icon-left class="button-facebook" color="facebook" block (click)="connexionFacebook()">
             <ion-icon name="logo-facebook"></ion-icon>
             Se connecter avec facebook
         </button>

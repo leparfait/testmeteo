@@ -46,7 +46,7 @@ export class ChatPage {
     })
   }
 
-  sendMessage(){
+ sendMessage(){
     this.db.list('/chat').push({
       username: this.username,
       message : this.message

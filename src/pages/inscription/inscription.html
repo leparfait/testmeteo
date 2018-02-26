@@ -23,27 +23,32 @@
             <ion-list>
 
                 <ion-item>
-                  <ion-label stacked>Nom:</ion-label>
-                  <ion-input type="text"></ion-input>
+                  <ion-label stacked>Nom Complet:</ion-label>
+                  <ion-input type="text" [(ngModel)]="nom" ></ion-input>
                 </ion-item>
               
                 <ion-item>
                   <ion-label stacked>Email:</ion-label>
-                  <ion-input type="email"></ion-input>
+                  <ion-input type="email" [(ngModel)]="email"></ion-input>
                 </ion-item>
 
                 <ion-item>
                     <ion-label stacked>Login:</ion-label>
-                    <ion-input type="text"></ion-input>
+                    <ion-input type="text" [(ngModel)]="login"></ion-input>
                 </ion-item>
 
                 <ion-item>
                     <ion-label stacked>Mot de passe:</ion-label>
-                    <ion-input type="password"></ion-input>
+                    <ion-input type="password" [(ngModel)]="password"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label stacked>Numero:</ion-label>
+                    <ion-input type="number" [(ngModel)]="numero"></ion-input>
                 </ion-item>
                 
                 <ion-item>
-                    <ion-label>Ville:</ion-label>
+                    <ion-label stacked>Ville de résidence:</ion-label>
                     <ion-select [(ngModel)]="ville">
                       <ion-option value="douala">Douala</ion-option>
                       <ion-option value="yaounde">Yaounde</ion-option>
@@ -57,12 +62,9 @@
                     </ion-select>
                   </ion-item>
 
-                <ion-item>
-                    <ion-label stacked>Photo:</ion-label>
-                    <ion-input type="file"></ion-input>
-                </ion-item><br>
-
-                <button class="buttton-enregistrer" ion-button block color="darkness" >Enregistrer</button>
+                <button ion-button icon-right class="buttton-enregistrer" color="darkness" (click)="onInscription()">
+                        Suivant <ion-icon name="add"></ion-icon>
+                </button>
 
               </ion-list>
         </ion-row>

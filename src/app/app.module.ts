@@ -21,6 +21,10 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {AngularFireAuthModule} from 'angularfire2/auth'
 import { InscriptionPage } from '../pages/inscription/inscription';
+import { PhotoProfilPage } from '../pages/photo-profil/photo-profil';
+import { authService } from '../service/auth.service';
+import { InscriptionService } from '../service/inscription.service';
+import { PostService } from '../service/post.service';
 
 
 
@@ -36,7 +40,8 @@ var config = {
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,LoginPage,RegisterPage,EmailregisterPage,FacebookRegisterPage,ChatPage,PostsPage,InscriptionPage,
+    AboutPage,LoginPage,RegisterPage,EmailregisterPage,FacebookRegisterPage,
+    ChatPage,PostsPage,InscriptionPage,PhotoProfilPage,
     ContactPage,
     HomePage,
     TabsPage,
@@ -51,14 +56,15 @@ var config = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,LoginPage,RegisterPage,EmailregisterPage,FacebookRegisterPage,ChatPage,PostsPage,InscriptionPage,
+    AboutPage,LoginPage,RegisterPage,EmailregisterPage,FacebookRegisterPage,ChatPage,
+    PostsPage,InscriptionPage,PhotoProfilPage,
     ContactPage,
     HomePage,
     TabsPage
   ],
   providers: [
     StatusBar,
-    SplashScreen,
+    SplashScreen,authService,InscriptionService,PostService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
