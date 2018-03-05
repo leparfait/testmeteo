@@ -40,10 +40,9 @@ export class RegisterPage {
   async registerEmail( user:User){
     try{
        const result = await this.afauth.auth.createUserWithEmailAndPassword(user.email, user.password);
-       console.log(result);
        if(result){
-         this.navCtrl.setRoot('InscriptionPage');
-       }
+        this.navCtrl.push(InscriptionPage);
+      }
     }catch(e){
       this.showAlert('Erreur','Impossible d\'enregistrer ce compte');
       console.error(e);

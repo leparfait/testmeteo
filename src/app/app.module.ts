@@ -23,9 +23,10 @@ import {AngularFireAuthModule} from 'angularfire2/auth'
 import { InscriptionPage } from '../pages/inscription/inscription';
 import { PhotoProfilPage } from '../pages/photo-profil/photo-profil';
 import { authService } from '../service/auth.service';
-import { InscriptionService } from '../service/inscription.service';
 import { PostService } from '../service/post.service';
-
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { AddPostPage } from '../pages/add-post/add-post';
+import { DetailPostsPage } from '../pages/detail-posts/detail-posts';
 
 
 var config = {
@@ -41,7 +42,7 @@ var config = {
   declarations: [
     MyApp,
     AboutPage,LoginPage,RegisterPage,EmailregisterPage,FacebookRegisterPage,
-    ChatPage,PostsPage,InscriptionPage,PhotoProfilPage,
+    ChatPage,PostsPage,InscriptionPage,PhotoProfilPage,AddPostPage,DetailPostsPage,
     ContactPage,
     HomePage,
     TabsPage,
@@ -57,14 +58,14 @@ var config = {
   entryComponents: [
     MyApp,
     AboutPage,LoginPage,RegisterPage,EmailregisterPage,FacebookRegisterPage,ChatPage,
-    PostsPage,InscriptionPage,PhotoProfilPage,
+    PostsPage,InscriptionPage,PhotoProfilPage,AddPostPage,DetailPostsPage,
     ContactPage,
     HomePage,
     TabsPage
   ],
   providers: [
     StatusBar,
-    SplashScreen,authService,InscriptionService,PostService,
+    SplashScreen,authService,PostService,Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

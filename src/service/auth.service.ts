@@ -12,7 +12,7 @@ import { User } from "../model/user.model";
     }
 
     loginWithGoogle(){
-        this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+        this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     }
 
     async registerEmail( user:User){

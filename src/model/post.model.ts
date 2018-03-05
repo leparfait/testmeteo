@@ -1,9 +1,11 @@
 
 export class Post{
-    titre: string;
-    type : string;
-    caracterisque: string;
+    userId : string;
+    nom: string;
+    categorie : string;
+    description: string;
     prix: number;
     discutable: boolean;
-    photo: File;
+    status:boolean;
+    imageUrl?: File;
 }

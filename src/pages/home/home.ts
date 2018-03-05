@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
-import { InscriptionPage } from '../inscription/inscription';
-import { authService } from '../../service/auth.service';
+import { NavController, AlertController, LoadingController } from 'ionic-angular';
 import { User } from '../../model/user.model';
 import { RegisterPage } from '../register/register';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { PostsPage } from '../posts/posts';
+import { authService } from '../../service/auth.service';
 
 
 @Component({
@@ -14,8 +14,9 @@ import { AngularFireAuth } from 'angularfire2/auth';
 export class HomePage {
 
   user = { } as User;
+  userId : string;
   
-  constructor(public navCtrl: NavController, public authService:authService,
+  constructor(public navCtrl: NavController, public authService:authService,public loadingCtrl:LoadingController,
   public afAuth: AngularFireAuth,public alertCtrl: AlertController) {
 
   }
@@ -34,23 +35,62 @@ export class HomePage {
   }
 
   async connexion(user: User){
+    //chargement 
+    let loader = this.loadingCtrl.create({
+      content: "Connexion...",
+      duration: 3000
+    });
+     loader.present();
+     // connexion
      try{
        const result = this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);
-       console.log(result);
+       this.afAuth.authState.subscribe(user =>{
+        if(user){
+          this.userId = user.uid;
+          this.navCtrl.push(PostsPage);
+          loader.dismiss();
+     }
+    });
      }catch(e){
        this.showAlert('Erreur','Impossible de se connecter à ce compte');
+       loader.dismiss();
        console.log(e);
-       user.email = "";
-       user.password = "";
+       /* user.email = "";
+       user.password = ""; */
      }
   }
 
+  //connexion avec une adresse gmail
+  loginWithGoogle(){
+
+    //chargement
+    let loader = this.loadingCtrl.create({
+      content: "Connexion...",
+      duration: 3000
+    });
+     loader.present();
+
+     //connexion
+    try{
+      const result = this.authService.loginWithGoogle();
+      this.afAuth.authState.subscribe(user =>{
+        if(user){
+          this.userId = user.uid;
+          this.navCtrl.push(PostsPage);
+          loader.dismiss();
+     }
+    });   
+  }catch(e){
+      this.showAlert('Erreur','Impossible de se connecter à ce compte');
+      loader.dismiss();
+      console.log(e);
+      /* user.email = "";
+      user.password = ""; */
+    }    
+}
+
   connexionFacebook(){
 
-  }
-  
-  loginWithGoogle(){
-    this.authService.loginWithGoogle();
   }
 
 }
