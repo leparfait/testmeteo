@@ -13,7 +13,7 @@ import { authService } from '../../service/auth.service';
 })
 export class HomePage {
 
-  user = { } as User;
+  user? = {} as User;
   userId : string;
   
   constructor(public navCtrl: NavController, public authService:authService,public loadingCtrl:LoadingController,

@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { storage } from 'firebase';
+//import { storage } from 'firebase';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { PostsPage } from '../posts/posts';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import * as firebase from 'firebase';
+import { Upload } from '../../model/image.model';
+import { UploadService } from '../../service/upload.service';
+import { Profil} from '../../model/profil.model'
+
 
 /**
  * Generated class for the InscriptionPage page.
@@ -19,16 +24,16 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
   templateUrl: 'inscription.html',
 })
 export class InscriptionPage {
-
+  imageSrc: string;
+  imageUrl: string;
   userId: string;
-  nom : string='';
-  ville : string='';
-  numero : number ;
-  photo : any;
+  profil = { } as Profil;
+
+  private uploadTask : firebase.storage.UploadTask;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl: AlertController,
               public afAuth : AngularFireAuth, public db:AngularFireDatabase,private loadingCtrl:LoadingController,
-              private camera: Camera) {
+              private camera: Camera, private uploadService:UploadService) {
                 
                 this.afAuth.authState.subscribe(user =>{
                   if(user) this.userId = user.uid;
@@ -48,19 +53,16 @@ export class InscriptionPage {
     alert.present();
   }
 
-  saveProfil(){
+  saveProfil(profil: Profil){
     let loading = this.loadingCtrl.create({
       content:"Enregistrement..."
     });
     loading.present();
     try{
       if(!this.userId) return ;
-      this.db.list('profileUser/').push({
-        userId : this.userId,
-        nom: this.nom,
-        numero : this.numero,
-        ville : this.ville,
-      }).then( ()=>{
+      profil.userId = this.userId;
+      profil.imageUrl = this.imageUrl;
+      this.db.list('profileUser/').push(profil).then( ()=>{
         this.navCtrl.push(PostsPage);
       })
       loading.dismiss();
@@ -75,7 +77,7 @@ export class InscriptionPage {
     try{
           const options1:CameraOptions = {
           quality:50,
-          destinationType : this.camera.DestinationType.DATA_URL,
+          destinationType : this.camera.DestinationType.FILE_URI,
           encodingType : this.camera.EncodingType.JPEG,
           mediaType : this.camera.MediaType.PICTURE,
           sourceType : this.camera.PictureSourceType.CAMERA,
@@ -85,7 +87,7 @@ export class InscriptionPage {
         }
         const options2:CameraOptions = {
          quality:50,
-         destinationType : this.camera.DestinationType.DATA_URL,
+         destinationType : this.camera.DestinationType.FILE_URI,
          encodingType : this.camera.EncodingType.JPEG,
          mediaType : this.camera.MediaType.PICTURE,
          sourceType : this.camera.PictureSourceType.PHOTOLIBRARY,
@@ -110,10 +112,11 @@ export class InscriptionPage {
    }
    
    takePicture(options){
-       this.camera.getPicture(options).then(data=>{
-         this.photo = 'data:image/jpeg;base64,'+data; // image format base64
-         const picture = storage().ref('photoUser');
-         picture.putString(data);
+         this.camera.getPicture(options).then(data=>{
+         this.imageSrc = 'data:image/jpeg;base64,'+data; // image format base64     
+         this.uploadService.pushUploadString(this.imageSrc);
+         this.imageUrl = this.uploadService.pictureUrl;
+
        }).catch(err=>{
          console.log(err);
        })

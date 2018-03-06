@@ -21,40 +21,49 @@
         </ion-row><br>
         <ion-row>
                 <ion-list>
-                        <div class="photo">
-                                <ion-buttons color="darkness">
-                                        <button ion-button icon-only  (click)="onTakePicture()" >
-                                          <ion-icon name="camera"></ion-icon>
-                                        </button>
+                        <div class="icon-camera">
+                                <ion-buttons>
+                                  <button block ion-button icon-only color="darkness" (click)="onTakePicture()" >
+                                    <ion-icon name="camera"></ion-icon> Photo de profil 
+                                   </button>
                                 </ion-buttons>
                         </div><br>
-                        <ion-item>
-                          <ion-label stacked>Nom Complet:</ion-label>
-                          <ion-input type="text" [(ngModel)]="nom" ></ion-input>
-                        </ion-item>
-        
-                        <ion-item>
-                            <ion-label stacked>Numero:</ion-label>
-                            <ion-input type="number" [(ngModel)]="numero"></ion-input>
-                        </ion-item>
-                        
-                        <ion-item>
-                            <ion-label stacked>Ville de résidence:</ion-label>
-                            <ion-select [(ngModel)]="ville">
-                              <ion-option value="douala">Douala</ion-option>
-                              <ion-option value="yaounde">Yaounde</ion-option>
-                              <ion-option value="bafoussam">Bafoussam</ion-option>
-                              <ion-option value="ngaroua">Ngaroua</ion-option>
-                              <ion-option value="kribi">Kribi</ion-option>
-                              <ion-option value="buea">Buea</ion-option>
-                              <ion-option value="ngaoundere">Ngaoundere</ion-option>
-                              <ion-option value="ebolowa">Ebolowa</ion-option>
-                              <ion-option value="bertoua">Bertoua</ion-option>
+                        <div *ngIf="currentUpload">
+                            <div class="progress">
+                              <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': currentUpload?.progress + '%' }"></div>
+                            </div>
+                            Progression: {{currentUpload?.progress}}% Complete
+                        </div>
+                        <div *ngIf="imageSrc">
+                           <img src="{{imageSrc}}" height="200px" width="150px" />
+                        </div>
+                        <button ion-item>
+                            <ion-icon name="md-person" item-start color="darkness"></ion-icon>
+                            <ion-label fixe>Nom Complet:</ion-label>
+                            <ion-input type="text" [(ngModel)]="profil.nom"  ></ion-input>
+                        </button>
+                        <button ion-item>
+                            <ion-icon name="ios-call" item-start color="darkness"></ion-icon>
+                            <ion-label fixe>Téléphone:</ion-label>
+                            <ion-input type="number" [(ngModel)]="profil.telephone"  ></ion-input>
+                        </button>  
+                        <button ion-item>
+                            <ion-icon name="ios-people" item-start color="darkness"></ion-icon>
+                            <ion-label fixe>Ville de résidence:</ion-label>
+                            <ion-select [(ngModel)]="profil.ville">
+                                <ion-option value="douala">Douala</ion-option>
+                                <ion-option value="yaounde">Yaounde</ion-option>
+                                <ion-option value="bafoussam">Bafoussam</ion-option>
+                                <ion-option value="ngaroua">Ngaroua</ion-option>
+                                <ion-option value="kribi">Kribi</ion-option>
+                                <ion-option value="buea">Buea</ion-option>
+                                <ion-option value="ngaoundere">Ngaoundere</ion-option>
+                                <ion-option value="ebolowa">Ebolowa</ion-option>
+                                <ion-option value="bertoua">Bertoua</ion-option>
                             </ion-select>
-                          </ion-item>
-        
-                        <button type="submit" ion-button icon-right block color="darkness" (click)="saveProfil(profil)">
-                                Enregistrer <ion-icon name="send"></ion-icon>
+                        </button>                                      
+                        <button class="button-save" type="submit" ion-button icon-right color="darkness" (click)="saveProfil(profil)">
+                                Enregistrer <ion-icon name="md-archive"></ion-icon>
                         </button>
         
                  </ion-list>

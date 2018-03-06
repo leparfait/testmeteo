@@ -27,6 +27,7 @@ import { PostService } from '../service/post.service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { AddPostPage } from '../pages/add-post/add-post';
 import { DetailPostsPage } from '../pages/detail-posts/detail-posts';
+import { UploadService } from '../service/upload.service';
 
 
 var config = {
@@ -65,7 +66,7 @@ var config = {
   ],
   providers: [
     StatusBar,
-    SplashScreen,authService,PostService,Camera,
+    SplashScreen,authService,PostService,Camera,UploadService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

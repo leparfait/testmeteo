@@ -13,15 +13,16 @@
       Bienvenue sur Vient Vendre
     </ion-row><br>
     <ion-row>
-        <ion-item>
-            <ion-label stacked>Email:</ion-label>
+        <button ion-item>
+            <ion-icon name="ios-mail" item-start color="darkness"></ion-icon>
+            <ion-label fixe>Email:</ion-label>
             <ion-input type="email" [(ngModel)]="user.email" ></ion-input>
-        </ion-item>
-
-        <ion-item>
-            <ion-label stacked>Mot de passe:</ion-label>
-            <ion-input type="password" [(ngModel)]="user.password" ></ion-input>
-        </ion-item><br>
+        </button>
+        <button ion-item>
+            <ion-icon name="md-key" item-start color="darkness"></ion-icon>
+            <ion-label fixe>Mot de passe:</ion-label>
+            <ion-input type="password" [(ngModel)]="user.password"  ></ion-input>
+        </button>
 
       <button class="buttton-connexion" ion-button  color="darkness" block (click)="connexion(user)">
         Se connecter</button>

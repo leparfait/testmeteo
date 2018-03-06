@@ -56,8 +56,15 @@
           <button ion-item>
             <ion-icon name="camera" item-start color="darkness"></ion-icon>
             <ion-label fixe>Image:</ion-label>
-            <ion-input type="file" [(ngModel)]="post.imageUrl"></ion-input>
+            <ion-input type="file" [(ngModel)]="post.imageUrl" (change)="selectImagePost($event)" ></ion-input>
           </button><br>
+          <div *ngIf="currentUpload">
+              <div class="progress">
+                <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': currentUpload?.progress + '%' }"></div>
+              </div>
+              Progress: {{currentUpload?.name}} | {{currentUpload?.progress}}% Complete
+            </div>
+
           <button ion-button color="darkness" class="publier" (click)="addPost(post)" >Publier</button>
       
         </ion-list>
