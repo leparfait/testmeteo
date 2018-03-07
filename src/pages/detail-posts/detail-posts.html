@@ -9,8 +9,8 @@
     <ion-navbar color="darkness">
       <ion-title>détail publication</ion-title>
       <ion-buttons end>
-          <button ion-button icon-only >
-            <ion-icon name="share"></ion-icon>
+          <button ion-button icon-only (click)="share()" >
+            <ion-icon name="share" ></ion-icon>
           </button>
       </ion-buttons>
   </ion-navbar>
@@ -45,6 +45,12 @@
           <div class="vendeur"><strong>Contacter le vendeur</strong></div>
         </button>
       </ion-col>
+      <ion-col>
+          <button ion-button icon-left clear small click="callVendor()">
+            <ion-icon name="ios-call" color="darkness"></ion-icon>
+            <div class="vendeur"><strong>Appeler</strong></div>
+          </button>
+        </ion-col>
       <ion-col center text-center>
         <ion-note>
           11h ago

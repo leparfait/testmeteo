@@ -28,6 +28,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { AddPostPage } from '../pages/add-post/add-post';
 import { DetailPostsPage } from '../pages/detail-posts/detail-posts';
 import { UploadService } from '../service/upload.service';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { CallNumber } from '@ionic-native/call-number';
 
 
 var config = {
@@ -66,7 +68,7 @@ var config = {
   ],
   providers: [
     StatusBar,
-    SplashScreen,authService,PostService,Camera,UploadService,
+    SplashScreen,authService,PostService,Camera,UploadService,SocialSharing,CallNumber,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

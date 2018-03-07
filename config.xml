@@ -87,4 +87,6 @@
     <plugin name="cordova-plugin-camera" spec="^4.0.2" />
     <plugin name="info.protonet.imageresizer" spec="^0.1.1" />
     <engine name="android" spec="7.0.0" />
+    <plugin name="cordova-plugin-x-socialsharing" spec="^5.3.2" />
+    <plugin name="mx.ferreyra.callnumber" spec="~0.0.2" />
 </widget>

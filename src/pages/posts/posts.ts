@@ -44,25 +44,21 @@ export class PostsPage {
         });
         alert.present();
       }
- /*  $scope = {
-    autoplay: 2500,
-    loop: false,
-    speed: 1000,
-    slidesPerView: 1,
-    centeredSlides: true
-  } */
+
       addPost() {
         let modal = this.modalCtrl.create(AddPostPage);
         modal.present();
+      } 
+      getAllProfil(){
+          this.afAuth.authState.subscribe(user =>{
+            if(user){
+              this.userId = user.uid;
+               this._chatSubscription = this.db.list('/posts').valueChanges().subscribe(data =>{
+                this.posts = data;
+              })       
+            } 
+        });
       }
-
-     
-
-    /*   getPostsList(): AngularFireList<Post[]>{
-        if(!this.userId) return ;
-        this.posts = this.db.list('posts/'+ this.userId);
-        return this.posts;
-      } */
 
       getProfil(){
         if(!this.userId) return ;
@@ -74,6 +70,21 @@ export class PostsPage {
        this.navCtrl.push(DetailPostsPage, {post:post})
       }
   
+      // fonction de recherche d'une publication
+      getPost(event: any){
+         // Reset items back to all of the items
+        this.getAllProfil();
+    
+        // set val to the value of the searchbar
+        let val = event.target.value;
+    
+        // if the value is an empty string don't filter the items
+        if (val && val.trim() != '') {
+          this.posts = this.posts.filter((post) => {
+            return (post.nom.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          })
+        }
+     }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PostsPage');
