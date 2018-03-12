@@ -6,8 +6,8 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>chat</ion-title>
+  <ion-navbar color="darkness">
+    <ion-title>chat avec le vendeur</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -31,7 +31,8 @@
         <ion-input class="input" type="text" [(ngModel)]="message"></ion-input>
       </div>
       <div class="elem">
-        <button class="send" ion-button icon-only (click)="sendMessage()"><ion-icon name="send"></ion-icon></button>
+        <button class="send" ion-button icon-only color="darkness" (click)="sendMessage()">
+          <ion-icon  name="send"></ion-icon></button>
       </div>
     </div>
   </ion-toolbar>

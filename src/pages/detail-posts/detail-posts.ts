@@ -4,6 +4,9 @@ import { Post } from '../../model/post.model';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { CallNumber } from '@ionic-native/call-number';
 import { User } from 'firebase';
+import { ChatPage } from '../chat/chat';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase';
 
 
 /**
@@ -20,12 +23,27 @@ import { User } from 'firebase';
 })
 export class DetailPostsPage {
   post? : Post;
-  user? : any;
+  userId: any;
+  users? : any;
+  userVendor?:any;
   link? : string = null;
   constructor(public navCtrl: NavController, public navParams: NavParams,private socialSharing: SocialSharing,
-              private callNumber: CallNumber) {
-    this.post = this.navParams.get('post');
-
+              private callNumber: CallNumber, public afAuth:AngularFireAuth) {
+                this.post = this.navParams.get('post');
+                this.afAuth.authState.subscribe(user =>{
+                  if(user) this.userId = user.uid;
+                  firebase.database().ref().child('profileUser').orderByChild('userId').equalTo(this.post.userId).on('value',snap=>{
+                    const result = snap.val();
+                    const keys  = Object.keys(result);
+                    for(var i=0; i<keys.length ;i++){
+                        var k= keys[i];
+                        this.users = result[k];
+                        console.log(this.users);
+                    }
+               });  
+                  
+            });
+    console.log(this.post);
   }
 
   ionViewDidLoad() {
@@ -33,7 +51,7 @@ export class DetailPostsPage {
   }
 
   chatWithVendor(){
-
+   this.navCtrl.push(ChatPage,{post:this.post, userVendor:this.userVendor});
   }
 
   share(){
@@ -47,7 +65,7 @@ export class DetailPostsPage {
   }
 
   callVendor(){
-    this.callNumber.callNumber("18001010101", true)
+    this.callNumber.callNumber(this.users.telephone, true)
   .then(() => console.log('Launched dialer!'))
   .catch(() => console.log('Error launching dialer'));
   }

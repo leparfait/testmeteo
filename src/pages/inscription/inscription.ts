@@ -25,9 +25,11 @@ import { Profil} from '../../model/profil.model'
 })
 export class InscriptionPage {
   imageSrc: string;
-  imageUrl: string;
+  imageUrl?: string;
   userId: string;
   profil = { } as Profil;
+  selectedFiles ?: FileList;
+  currentUpload? : Upload;
 
   private uploadTask : firebase.storage.UploadTask;
 
@@ -61,7 +63,7 @@ export class InscriptionPage {
     try{
       if(!this.userId) return ;
       profil.userId = this.userId;
-      profil.imageUrl = this.imageUrl;
+      profil.imageUrl = this.currentUpload.url;
       this.db.list('profileUser/').push(profil).then( ()=>{
         this.navCtrl.push(PostsPage);
       })
@@ -73,7 +75,15 @@ export class InscriptionPage {
     }
   }
 
-  async onTakePicture(){
+  
+  selectImageUser(event: any){
+    this.selectedFiles = event.target.files;
+    let file = this.selectedFiles.item(0);
+    this.currentUpload = new Upload(file);
+    this.uploadService.pushUpload(this.currentUpload);
+  }
+
+  /* async onTakePicture(){
     try{
           const options1:CameraOptions = {
           quality:50,
@@ -120,5 +130,5 @@ export class InscriptionPage {
        }).catch(err=>{
          console.log(err);
        })
-   }
+   } */
 }

@@ -30,6 +30,7 @@ import { DetailPostsPage } from '../pages/detail-posts/detail-posts';
 import { UploadService } from '../service/upload.service';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { CallNumber } from '@ionic-native/call-number';
+import { MyPostPage } from '../pages/my-post/my-post';
 
 
 var config = {
@@ -44,7 +45,7 @@ var config = {
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,LoginPage,RegisterPage,EmailregisterPage,FacebookRegisterPage,
+    AboutPage,LoginPage,RegisterPage,EmailregisterPage,FacebookRegisterPage,MyPostPage,
     ChatPage,PostsPage,InscriptionPage,PhotoProfilPage,AddPostPage,DetailPostsPage,
     ContactPage,
     HomePage,
@@ -61,7 +62,7 @@ var config = {
   entryComponents: [
     MyApp,
     AboutPage,LoginPage,RegisterPage,EmailregisterPage,FacebookRegisterPage,ChatPage,
-    PostsPage,InscriptionPage,PhotoProfilPage,AddPostPage,DetailPostsPage,
+    PostsPage,InscriptionPage,PhotoProfilPage,AddPostPage,DetailPostsPage,MyPostPage,
     ContactPage,
     HomePage,
     TabsPage

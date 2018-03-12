@@ -21,19 +21,24 @@
         </ion-row><br>
         <ion-row>
                 <ion-list>
-                        <div class="icon-camera">
+                        <!-- <div class="icon-camera">
                                 <ion-buttons>
                                   <button block ion-button icon-only color="darkness" (click)="onTakePicture()" >
                                     <ion-icon name="camera"></ion-icon> Photo de profil 
                                    </button>
                                 </ion-buttons>
-                        </div><br>
+                        </div><br> --> 
+                        <button ion-item>
+                                <ion-icon name="camera" item-start color="darkness"></ion-icon>
+                                <ion-label fixe>Image:</ion-label>
+                                <ion-input type="file" placeholder="Choisir l'image..."  (change)="selectImageUser($event)" ></ion-input>
+                        </button><br>
                         <div *ngIf="currentUpload">
-                            <div class="progress">
-                              <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': currentUpload?.progress + '%' }"></div>
-                            </div>
-                            Progression: {{currentUpload?.progress}}% Complete
-                        </div>
+                                  <div class="progress">
+                                    <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': currentUpload?.progress + '%' }"></div>
+                                  </div>
+                                  Progress: {{currentUpload?.name}} | {{currentUpload?.progress}}% Complete
+                         </div>   
                         <div *ngIf="imageSrc">
                            <img src="{{imageSrc}}" height="200px" width="150px" />
                         </div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams ,AlertController, LoadingController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams ,AlertController, LoadingController, DateTime} from 'ionic-angular';
 import { Post } from '../../model/post.model';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { PostsPage } from '../posts/posts';
@@ -24,9 +24,10 @@ export class AddPostPage {
 
   post? = { } as Post;
   userId : string ;
-  user : any;
-  selectedFiles: FileList;
-  currentUpload: Upload;
+  user? : any;
+  userVendor? : any;
+  selectedFiles ?: FileList;
+  currentUpload? : Upload;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public afAuth:AngularFireAuth,
               public uploadService:UploadService, public alertCtrl:AlertController, public loadingCtrl:LoadingController,
@@ -34,6 +35,16 @@ export class AddPostPage {
         this.afAuth.authState.subscribe(user =>{
           this.user = user ;
           if(user) this.userId = user.uid;
+           firebase.database().ref().child('profileUser').orderByChild('ville').equalTo('douala').on('value',snap=>{
+               const result = snap.val();
+               const keys  = Object.keys(result);
+                              //console.log(keys);
+               for(var i=0; i<keys.length ;i++){
+                   var k= keys[i];
+                   this.userVendor = result[k];
+                   console.log(this.userVendor);
+               }
+          })                      
       });
   }
 
@@ -67,11 +78,12 @@ export class AddPostPage {
     try{
       if(!this.userId) return ;
       post.userId = this.userId;
-      this.showAlert('test',this.currentUpload.url);
-      //post.imageUrl = this.currentUpload.url;
-      //post.imageUrl = 'https://firebasestorage.googleapis.com/v0/b/blackmarket-3477c.appspot.com/o/uploads%2F6156sZYXnuL._SL1100_.jpg?alt=media&token=64a397f4-ce27-436b-9a25-5ec1b3dc7e20';
+      post.status = true;
+      post.dateCreation = new Date("MMM d, y h:mm:ss a");
+      //this.showAlert('test',this.currentUpload.url);
+      post.imageUrl = this.currentUpload.url;
       this.db.list('posts/').push(post).then( ()=>{
-        this.navCtrl.push(PostsPage,{user:this.user});
+        this.navCtrl.push(PostsPage,{user:this.user, userVendor:this.userVendor});
       })
       loading.dismiss();
     }catch(e){

@@ -56,7 +56,7 @@
           <button ion-item>
             <ion-icon name="camera" item-start color="darkness"></ion-icon>
             <ion-label fixe>Image:</ion-label>
-            <ion-input type="file" [(ngModel)]="post.imageUrl" (change)="selectImagePost($event)" ></ion-input>
+            <ion-input type="file" placeholder="Choisir l'image..." (change)="selectImagePost($event)" ></ion-input>
           </button><br>
           <div *ngIf="currentUpload">
               <div class="progress">

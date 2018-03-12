@@ -22,6 +22,7 @@ export class PostsPage {
   posts : any;//object[] = []; // list d'objets
   userId: string;
   profil : any;
+  userVendor : any;
   _chatSubscription : any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public afAuth:AngularFireAuth,
@@ -67,7 +68,8 @@ export class PostsPage {
       }
 
       postSelected(post){
-       this.navCtrl.push(DetailPostsPage, {post:post})
+       this.userVendor =  this.navParams.get('userVendor');
+       this.navCtrl.push(DetailPostsPage, {post:post, userVendor:this.userVendor})
       }
   
       // fonction de recherche d'une publication
