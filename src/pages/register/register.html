@@ -12,25 +12,46 @@
 
 </ion-header>
 
-
-<ion-content padding>
+<ion-content class="content" padding>
     <ion-grid>
         <ion-row class="logo">
-          <img src="/assets/imgs/logo.png" height="50px" width="50px" img-circle/> 
-        </ion-row>
-        <ion-row class="bienvenue">
-          Créer votre compte
+          <img src="/assets/imgs/logo.png" height="50px" width="80px" img-circle=""/> 
         </ion-row><br>
-      <ion-item>
-        <ion-label stacked>Email:</ion-label>
-        <ion-input type="email" [(ngModel)]="user.email" ></ion-input>
-      </ion-item>
+
+        <ion-row>
+          <button ion-item>
+              <ion-icon name="ios-mail" item-start color="darkness"></ion-icon>
+              <ion-label >Email:</ion-label>
+              <ion-input type="email" [(ngModel)]="user.email" ></ion-input>
+          </button>
+          <button ion-item>
+              <ion-icon name="md-key" item-start color="darkness"></ion-icon>
+              <ion-label >Mot de passe:</ion-label>
+              <ion-input type="password" [(ngModel)]="user.password"  ></ion-input>
+          </button>
+        </ion-row>
      
-      <ion-item>
-         <ion-label stacked>Mot de passe:</ion-label>
-         <ion-input type="password" [(ngModel)]="user.password" ></ion-input>
-       </ion-item>
-     
-       <button ion-button (click)="registerEmail(user)" color="darkness" >Enregistrer</button>
+       <button class="button-save" type="submit" ion-button icon-right color="darkness" (click)="registerEmail(user)">
+         Enregistrer <ion-icon name="md-archive"></ion-icon>
+       </button><br>
+       
+       <ion-row>
+        <div class="ou" >
+          <strong>Ou</strong>
+        </div>     
+      </ion-row>
+      
+       <ion-row>
+        <button class="buttton-google" icon-left ion-button  color="google" block (click)="createWithGoogle()">
+          <ion-icon name="logo-google"></ion-icon>
+          S'enregistrer avec Google
+        </button>
+        
+        <button ion-button icon-left class="button-facebook" color="facebook" block (click)="createWithFacebook()">
+            <ion-icon name="logo-facebook"></ion-icon>
+            S'enregistrer avec facebook
+        </button>
+    </ion-row>
+
     </ion-grid>
 </ion-content>

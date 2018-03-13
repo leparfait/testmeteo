@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController,LoadingController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth'
 import { User } from '../../model/user.model';
 import { InscriptionPage } from '../inscription/inscription';
+import { authService } from '../../service/auth.service';
 
 /**
  * Generated class for the RegisterPage page.
@@ -17,11 +18,12 @@ import { InscriptionPage } from '../inscription/inscription';
   templateUrl: 'register.html',
 })
 export class RegisterPage {
-
+  userId: string;
   user = {} as User
 
-  constructor(private afauth: AngularFireAuth, public navCtrl: NavController,
-     public navParams: NavParams,public alertCtrl: AlertController) {
+  constructor(private afauth: AngularFireAuth, public navCtrl: NavController,public authService:authService,
+              public navParams: NavParams,public alertCtrl: AlertController,public loadingCtrl:LoadingController,
+              public afAuth:AngularFireAuth) {
   }
 
   ionViewDidLoad() {
@@ -50,5 +52,59 @@ export class RegisterPage {
       user.password = "";
     }
   }
+
+  createWithGoogle(){
+   //chargement
+   let loader = this.loadingCtrl.create({
+    content: "Connexion...",
+    duration: 3000
+  });
+   loader.present();
+
+   //connexion
+  try{
+    const result = this.authService.loginWithGoogle();
+    this.afAuth.authState.subscribe(user =>{
+      if(user){
+        this.userId = user.uid;
+        this.navCtrl.push(InscriptionPage);
+        loader.dismiss();
+   }
+  });   
+}catch(e){
+    this.showAlert('Erreur','Impossible d\'enregistrer ce compte');
+    loader.dismiss();
+    console.log(e);
+    /* user.email = "";
+    user.password = ""; */
+  }    
+}
+
+  createWithFacebook(){
+      //chargement
+   let loader = this.loadingCtrl.create({
+    content: "Connexion...",
+    duration: 3000
+  });
+   loader.present();
+
+   //connexion
+  try{
+    const result = this.authService.loginWithFacebook();
+    this.afAuth.authState.subscribe(user =>{
+      if(user){
+        this.userId = user.uid;
+        this.navCtrl.push(InscriptionPage);
+        loader.dismiss();
+   }
+  });   
+}catch(e){
+    this.showAlert('Erreur','Impossible d\'enregistrer ce compte');
+    loader.dismiss();
+    console.log(e);
+    /* user.email = "";
+    user.password = ""; */
+  }    
+}
 
 }

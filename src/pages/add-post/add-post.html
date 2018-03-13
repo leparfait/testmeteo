@@ -32,8 +32,14 @@
           <button ion-item>
             <ion-icon name="filing" item-start color="darkness"></ion-icon>
             <ion-label fixe>Categorie:</ion-label>
-            <ion-input type="text" [(ngModel)]="post.categorie" ></ion-input>
-          </button>
+            <ion-select [(ngModel)]="post.categorie">
+                <ion-option value="Ordinateur">Ordinateur</ion-option>
+                <ion-option value="Telephone">Telephone</ion-option>
+                <ion-option value="Vetement">Vetement</ion-option>
+                <ion-option value="Chaussure">Chaussure</ion-option>
+                <ion-option value="Autres">Autres</ion-option>
+            </ion-select>
+          </button> 
       
           <button ion-item>
             <ion-icon name="barcode" item-start color="darkness"></ion-icon>
@@ -47,16 +53,11 @@
             <ion-input type="number" [(ngModel)]="post.prix"></ion-input>
           </button>
       
-          <button ion-item>
-            <ion-icon name="checkmark-circle" item-start color="darkness"></ion-icon>
-            <ion-label fixe>Discutable:</ion-label>
-            <ion-checkbox color="darkness" checked="true" [(ngModel)]="post.discutable"></ion-checkbox>
-          </button>
       
           <button ion-item>
             <ion-icon name="camera" item-start color="darkness"></ion-icon>
             <ion-label fixe>Image:</ion-label>
-            <ion-input type="file" placeholder="Choisir l'image..." (change)="selectImagePost($event)" ></ion-input>
+            <ion-input type="file"  (change)="selectImagePost($event)" ></ion-input>
           </button><br>
           <div *ngIf="currentUpload">
               <div class="progress">

@@ -5,6 +5,7 @@ import { HomePage } from '../home/home';
 import { PostsPage } from '../posts/posts';
 import { InscriptionPage } from '../inscription/inscription';
 import { MyPostPage } from '../my-post/my-post';
+import { RegisterPage } from '../register/register';
 
 @Component({
   templateUrl: 'tabs.html'

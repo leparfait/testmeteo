@@ -90,7 +90,30 @@ export class HomePage {
 }
 
   connexionFacebook(){
+   //chargement
+   let loader = this.loadingCtrl.create({
+    content: "Connexion...",
+    duration: 3000
+  });
+   loader.present();
 
+   //connexion
+  try{
+    const result = this.authService.loginWithFacebook();
+    this.afAuth.authState.subscribe(user =>{
+      if(user){
+        this.userId = user.uid;
+        this.navCtrl.push(PostsPage);
+        loader.dismiss();
+   }
+  });   
+}catch(e){
+    this.showAlert('Erreur','Impossible de se connecter à ce compte');
+    loader.dismiss();
+    console.log(e);
+    /* user.email = "";
+    user.password = ""; */
+  }    
   }
 
 }

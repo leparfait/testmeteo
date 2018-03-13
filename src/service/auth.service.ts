@@ -11,8 +11,12 @@ import { User } from "../model/user.model";
 
     }
 
-    loginWithGoogle(){
+    async loginWithGoogle(){
         this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    }
+
+    async loginWithFacebook(){
+       this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
     }
 
     async registerEmail( user:User){
