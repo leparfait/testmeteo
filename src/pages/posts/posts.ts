@@ -5,6 +5,8 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Post } from '../../model/post.model';
 import { AddPostPage } from '../add-post/add-post';
 import { DetailPostsPage } from '../detail-posts/detail-posts';
+import * as firebase from 'firebase';
+
 
 /**
  * Generated class for the PostsPage page.
@@ -19,24 +21,23 @@ import { DetailPostsPage } from '../detail-posts/detail-posts';
   templateUrl: 'posts.html',
 })
 export class PostsPage {
-  posts : any;//object[] = []; // list d'objets
+  posts : Array<any> = [];
   userId: string;
   profil : any;
   userVendor : any;
   _chatSubscription : any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public afAuth:AngularFireAuth,
-              public db: AngularFireDatabase,public modalCtrl: ModalController,public alertCtrl: AlertController) {
+              public modalCtrl: ModalController,public alertCtrl: AlertController) {
+
+    this.userVendor =  this.navParams.get('userVendor');
     this.afAuth.authState.subscribe(user =>{
       if(user){
         this.userId = user.uid;
-         this._chatSubscription = this.db.list('/posts').valueChanges().subscribe(data =>{
-          this.posts = data;
-        })       
+        this.getAllPost();
       } 
   });
-   
-  }
+}
     showAlert(titre, message) {
         let alert = this.alertCtrl.create({
           title: titre,
@@ -50,32 +51,28 @@ export class PostsPage {
         let modal = this.modalCtrl.create(AddPostPage);
         modal.present();
       } 
-      getAllProfil(){
-          this.afAuth.authState.subscribe(user =>{
-            if(user){
-              this.userId = user.uid;
-               this._chatSubscription = this.db.list('/posts').valueChanges().subscribe(data =>{
-                this.posts = data;
-              })       
-            } 
-        });
-      }
 
-      getProfil(){
-        if(!this.userId) return ;
-        this.profil = this.db.list('profileUser/'+ this.userId);
-        return this.profil;
+/*       recuperation de tous les publications valides
+ */    
+      getAllPost(){
+        firebase.database().ref().child('posts').orderByChild('status').equalTo(true).on('value',snap=>{
+          const result = snap.val();
+          const keys  = Object.keys(result);
+           for(var i=0; i<keys.length ;i++){
+              var k= keys[i];
+              this.posts[i] = result[k];
+              }
+         });     
       }
 
       postSelected(post){
-       this.userVendor =  this.navParams.get('userVendor');
-       this.navCtrl.push(DetailPostsPage, {post:post, userVendor:this.userVendor})
+       this.navCtrl.push(DetailPostsPage, {post:post})
       }
   
       // fonction de recherche d'une publication
-      getPost(event: any){
+      searchPost(event: any){
          // Reset items back to all of the items
-        this.getAllProfil();
+        this.getAllPost();
     
         // set val to the value of the searchbar
         let val = event.target.value;
@@ -83,7 +80,7 @@ export class PostsPage {
         // if the value is an empty string don't filter the items
         if (val && val.trim() != '') {
           this.posts = this.posts.filter((post) => {
-            return (post.nom.toLowerCase().indexOf(val.toLowerCase()) > -1);
+            return (post.categorie.toLowerCase().indexOf(val.toLowerCase()) > -1);
           })
         }
      }

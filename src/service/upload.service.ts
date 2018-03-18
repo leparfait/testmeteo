@@ -41,18 +41,6 @@ export class UploadService {
     .then(data=>{
       this.pictureUrl = data.downloadURL;
    });
-
-    this.uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-       (snapshot) =>  {
-        // upload in progress
-        //storageRef. = (this.uploadTask.snapshot.bytesTransferred / this.uploadTask.snapshot.totalBytes) * 100;
-      }, 
-      (error) => {
-        // upload failed
-        console.log(error)
-      },
-      
-    );
   }
 
   // Writes the file details to the realtime db

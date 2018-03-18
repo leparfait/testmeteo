@@ -9,4 +9,5 @@ export class Post{
     imageUrl: string;
     status:boolean;
     dateCreation:any ;
+    chatKey:string;
 }

@@ -3,13 +3,13 @@ import { IonicPage, NavController, NavParams, AlertController, LoadingController
 import { AngularFireAuth } from 'angularfire2/auth';
 //import { storage } from 'firebase';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { PostsPage } from '../posts/posts';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import * as firebase from 'firebase';
 import { Upload } from '../../model/image.model';
 import { UploadService } from '../../service/upload.service';
 import { Profil} from '../../model/profil.model'
-
+import { MyPostPage } from '../my-post/my-post';
+import { UidService } from '../../service/uid.service';
 
 /**
  * Generated class for the InscriptionPage page.
@@ -35,7 +35,7 @@ export class InscriptionPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl: AlertController,
               public afAuth : AngularFireAuth, public db:AngularFireDatabase,private loadingCtrl:LoadingController,
-              private camera: Camera, private uploadService:UploadService) {
+              private camera: Camera, private uploadService:UploadService,public uidService:UidService) {
                 
                 this.afAuth.authState.subscribe(user =>{
                   if(user) this.userId = user.uid;
@@ -63,31 +63,23 @@ export class InscriptionPage {
     try{
       if(!this.userId) return ;
       profil.userId = this.userId;
-      profil.imageUrl = this.currentUpload.url;
+      profil.imageUrl = this.imageUrl;
       this.db.list('profileUser/').push(profil).then( ()=>{
-        this.navCtrl.push(PostsPage);
+        this.navCtrl.push(MyPostPage);
       })
       loading.dismiss();
     }catch(e){
-      this.showAlert('Erreur','Impossible de se sauvegarder vos informations');
+      this.showAlert('Erreur','Impossible de sauvegarder vos informations');
       console.log(e);
       loading.dismiss();
     }
   }
 
-  
-  selectImageUser(event: any){
-    this.selectedFiles = event.target.files;
-    let file = this.selectedFiles.item(0);
-    this.currentUpload = new Upload(file);
-    this.uploadService.pushUpload(this.currentUpload);
-  }
-
-  /* async onTakePicture(){
+  async onTakePicture(){
     try{
           const options1:CameraOptions = {
           quality:50,
-          destinationType : this.camera.DestinationType.FILE_URI,
+          destinationType : this.camera.DestinationType.DATA_URL,
           encodingType : this.camera.EncodingType.JPEG,
           mediaType : this.camera.MediaType.PICTURE,
           sourceType : this.camera.PictureSourceType.CAMERA,
@@ -97,13 +89,11 @@ export class InscriptionPage {
         }
         const options2:CameraOptions = {
          quality:50,
-         destinationType : this.camera.DestinationType.FILE_URI,
+         destinationType : this.camera.DestinationType.DATA_URL,
          encodingType : this.camera.EncodingType.JPEG,
          mediaType : this.camera.MediaType.PICTURE,
          sourceType : this.camera.PictureSourceType.PHOTOLIBRARY,
          allowEdit: true,
-         targetWidth :320,
-         targetHeight: 240
        };
      
        let alert = this.alertCtrl.create({
@@ -123,12 +113,16 @@ export class InscriptionPage {
    
    takePicture(options){
          this.camera.getPicture(options).then(data=>{
-         this.imageSrc = 'data:image/jpeg;base64,'+data; // image format base64     
-         this.uploadService.pushUploadString(this.imageSrc);
-         this.imageUrl = this.uploadService.pictureUrl;
+         this.imageSrc = data;
+     const storageRef = firebase.storage().ref();
+     storageRef.child('/uploads/'+this.uidService.uid()).child('pink.JPEG').putString(this.imageSrc,'base64',{contentType:'image/JPEG'})
+    .then(data=>{
+      this.imageUrl = data.downloadURL;
+   });                  
 
        }).catch(err=>{
          console.log(err);
        })
-   } */
+   } 
+
 }

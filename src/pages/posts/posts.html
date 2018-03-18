@@ -7,7 +7,7 @@
 <ion-header>
     <ion-navbar color="darkness">
     <ion-title *ngIf="!isSearchBarOpened">Publication</ion-title>
-    <ion-searchbar *ngIf="isSearchBarOpened" showCancelButton="true" (ionInput)="getPost($event)" (ionCancel)="isSearchBarOpened=false"></ion-searchbar>
+    <ion-searchbar *ngIf="isSearchBarOpened" showCancelButton="true" (ionInput)="searchPost($event)" (ionCancel)="isSearchBarOpened=false"></ion-searchbar>
      <ion-buttons end>
       <button ion-button icon-only *ngIf="!isSearchBarOpened" (click)="isSearchBarOpened=true">
         <ion-icon name="search"></ion-icon>
@@ -17,8 +17,8 @@
 </ion-header>
 
 <ion-content padding>
-  <div class="slider">
-    <ion-slides pager class="slides" options="options" slider="slider">
+ <div class="slider">
+    <ion-slides pager class="slides" options="options" slider="slider" autoplay="3000" loop="true" speed="1000">
 
         <ion-slide class="slide" >
           <img src="assets/imgs/1.jpg">
@@ -34,16 +34,16 @@
       
       </ion-slides>
      </div><br>
-      <div>
-          <ion-list>
+     <div>
+         <ion-list>
               <button ion-item *ngFor="let post of posts" (click)="postSelected(post)"> 
                 <!-- affiche la variable post -->
                 <ion-avatar item-start>
-                  <img src="{{post.imageUrl}}">
+                  <img data-lazy-load-src="assets/imgs/default.png" src="{{post.imageUrl}}" class="lazy-loaded">
                 </ion-avatar>
                 <h2>{{post.nom}}</h2>
                 <p><strong>{{post.prix}}</strong>: {{post.description}}</p>
-              </button >
+              </button>
           </ion-list>
       </div>
       <ion-fab bottom right edge class="add">

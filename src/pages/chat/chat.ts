@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 
@@ -18,8 +18,10 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class ChatPage {
   username? : string;
-  userVendor : any;
+  userVendor? : any;
+  post? : any;
   userId : string;
+  currentUser?:any;
   message : string='';
   _chatSubscription: any;
   messages: object[] = [];
@@ -29,21 +31,26 @@ export class ChatPage {
               public afAuth:AngularFireAuth) {
         this.afAuth.authState.subscribe(user =>{
           if(user) this.userId = user.uid;
-      });
-    this.userVendor = this.navParams.get('userVendor');
-  /*   this._chatSubscription = firebase.database().ref().child('chat').orderByChild('userId').equalTo(this.userVendor.userId,this.userId)
-                              .on('value',snap=>{
-                                const result = snap.val();
-                                const keys  = Object.keys(result);
-                                for(var i=0; i<keys.length ;i++){
-                                    var k= keys[i];
-                                    this.messages = result[k];
-                                    console.log(this.messages);
-                                }
-   }); */ 
-    this._chatSubscription = this.db.list('/chat').valueChanges().subscribe(data =>{
+            this.userVendor = this.navParams.get('userVendor');
+            this.post = this.navParams.get('post');
+
+             this._chatSubscription = this.db.list('/chat/'+this.post.userId+'_'+this.post.chatkey).valueChanges().subscribe(data =>{
       this.messages = data;
-    })
+      console.log(data);
+    });  
+  });
+   
+
+  /*  firebase.database().ref().child('chat').orderByChild('chatkey').equalTo('W0w4VghcuHefDbwcF4POiRv3Ero26S8KwcuiuOPuOpQZyZz4v1ZcCs83').on('value',snap=>{
+                                                  const result = snap.val();
+                                                  const keys  = Object.keys(result);
+                                                  for(var i=0; i<keys.length ;i++){
+                                                      var k= keys[i];
+                                                      this.messages = result[k];
+                                                      console.log(this.messages);
+                                                  }
+                                              }); */ 
+  
   }
 
   ionViewWillLeave(){
@@ -57,19 +64,35 @@ export class ChatPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatPage');
-    /* this.db.list('/chat').push({
-      specialMessage : true,
-      info : '${this.username} has joined the room '
-    }) */
   }
 
+  getProfilUser(){
+    firebase.database().ref().child('profileUser').orderByChild('userId').equalTo(this.userId).on('value',snap=>{
+      const result = snap.val();
+      const keys  = Object.keys(result);
+      for(var i=0; i<keys.length ;i++){
+          var k= keys[i];
+          this.currentUser = result[k];
+          //console.log(this.userVendor);
+      }
+    }); 
+  } 
+
  sendMessage(){
-    this.db.list('/chat').push({
-      //username: this.username,
-      message : this.message
+   //this.getProfilUser();
+    this.db.list('/chat/'+this.post.userId+'_'+this.post.chatkey).push({
+      //username: this.currentUser.nom,
+      vendeurId:this.post.userId,
+      acheteurId:this.userId,
+      chatkey:this.post.userId+this.post.chatkey,
+      message : this.message,
     }).then( ()=>{
 
     })
     this.message = "";
   }
+
+  hack(val){
+    return Array.from(val);
+    }
 }

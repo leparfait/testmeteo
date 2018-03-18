@@ -1,5 +1,27 @@
 page-my-post {
     .add{
-        margin-bottom: 20px;
+        margin-bottom: 30px;
     }
+    strong{
+        color: #8b0000;
+        font-weight: bold;
+    }
+    .VenduIcon ion-icon{
+            color: rgb(9, 148, 9);
+     }
+
+     .VenduIcon {
+            color: rgb(9, 148, 9);
+     }
+
+     .EditionIcon {
+        ion-icon{
+            color: rgb(33, 134, 218);
+        }
+     }
+     .VenduIcon {
+        ion-icon{
+            color: rgb(214, 39, 39);
+        }
+     }
 }

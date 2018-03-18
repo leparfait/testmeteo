@@ -18,11 +18,21 @@
   <div>
 
     <ion-card class="">
-        <ion-card-header class="content">
-          Articles
-        </ion-card-header>
-      
+      <ion-card-header class="content">
+          Articles<br>
+      </ion-card-header>
+
+      <ion-card-content>
         <ion-list class="list">
+
+          <ion-fab left bottom edge class="add">
+            <button ion-fab color="darkness" (click)="onTakePicture()" ><ion-icon name="camera"></ion-icon></button>
+          </ion-fab>
+          
+          <div *ngIf="imageUrl">
+              <img src="{{imageUrl}}" />
+           </div>
+
           <button ion-item>
             <ion-icon name="star" item-start color="darkness"></ion-icon>
             <ion-label fixe>Nom:</ion-label>
@@ -33,11 +43,16 @@
             <ion-icon name="filing" item-start color="darkness"></ion-icon>
             <ion-label fixe>Categorie:</ion-label>
             <ion-select [(ngModel)]="post.categorie">
+                <ion-option value="laptop">Laptop</ion-option>
+                <ion-option value="desktop">Desktop</ion-option>
+                <ion-option value="telephone">Telephone</ion-option>
+                <ion-option value="televiseur">Televiseur</ion-option>
+                <ion-option value="vetement">Vetement</ion-option>
+                <ion-option value="chaussure">Chaussure</ion-option>
                 <ion-option value="Ordinateur">Ordinateur</ion-option>
-                <ion-option value="Telephone">Telephone</ion-option>
-                <ion-option value="Vetement">Vetement</ion-option>
-                <ion-option value="Chaussure">Chaussure</ion-option>
-                <ion-option value="Autres">Autres</ion-option>
+                <ion-option value="cuisine">Ustensiles de cuisine</ion-option>
+                <ion-option value="meches greffe">Mèches et Grèffes</ion-option>
+                <ion-option value="autres">Autres</ion-option>
             </ion-select>
           </button> 
       
@@ -52,26 +67,14 @@
             <ion-label fixe>Prix:</ion-label>
             <ion-input type="number" [(ngModel)]="post.prix"></ion-input>
           </button>
-      
-      
-          <button ion-item>
-            <ion-icon name="camera" item-start color="darkness"></ion-icon>
-            <ion-label fixe>Image:</ion-label>
-            <ion-input type="file"  (change)="selectImagePost($event)" ></ion-input>
-          </button><br>
-          <div *ngIf="currentUpload">
-              <div class="progress">
-                <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': currentUpload?.progress + '%' }"></div>
-              </div>
-              Progress: {{currentUpload?.name}} | {{currentUpload?.progress}}% Complete
-            </div>
 
-          <button ion-button color="darkness" class="publier" (click)="addPost(post)" >Publier</button>
+          <button [disabled]="!post.nom || !post.categorie || !post.description || !post.prix" ion-button color="darkness" class="publier" (click)="addPost(post)">Publier</button>
       
         </ion-list>
-      </ion-card>
-      <button ion-button clear color="darkness" class="publier" (click)="cancel()" >Annuler</button>
+      </ion-card-content>
+    </ion-card>
+      <button   ion-button clear color="darkness" class="publier" (click)="cancel()">Annuler</button>
 
   </div>
-    
+  
 </ion-content>

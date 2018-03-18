@@ -13,13 +13,13 @@
 </ion-header>
 
 
-<ion-content padding>
- <div id="chatMessages">
+<ion-content padding class="content">
+ <div id="chatMessages" *ngIf="messages">
    <div class="messsage" *ngFor ="let message of messages" [class]="message.specialMessage ? 'info special' : 'info'" >
-    <div [class]="message.username == username? 'innerMessage messageRight':'innerMessage messageLeft' ">
-      <div class="username"> {{message.username}} </div><br/>
+    <div [class]="message.acheteurId == userId? 'bubble messageRight':'bubble messageLeft' ">
+    <!--   <div class="username"> {{message.username}}</div><br/> -->
       <div class="message">{{message.message}}</div>
-    </div><br><br><br><br>
+    </div><br><br><br>
    </div>
  </div>
 </ion-content>
@@ -31,7 +31,7 @@
         <ion-input class="input" type="text" [(ngModel)]="message"></ion-input>
       </div>
       <div class="elem">
-        <button class="send" ion-button icon-only color="darkness" (click)="sendMessage()">
+        <button [disabled]="!message" class="send" ion-button icon-only color="darkness" (click)="sendMessage()">
           <ion-icon  name="send"></ion-icon></button>
       </div>
     </div>

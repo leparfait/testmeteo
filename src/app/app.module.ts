@@ -10,8 +10,6 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { EmailregisterPage } from '../pages/emailregister/emailregister';
-import { FacebookRegisterPage } from '../pages/facebook-register/facebook-register';
 import { RegisterPage } from '../pages/register/register';
 import { LoginPage } from '../pages/login/login';
 import { ChatPage } from '../pages/chat/chat';
@@ -21,7 +19,6 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {AngularFireAuthModule} from 'angularfire2/auth'
 import { InscriptionPage } from '../pages/inscription/inscription';
-import { PhotoProfilPage } from '../pages/photo-profil/photo-profil';
 import { authService } from '../service/auth.service';
 import { PostService } from '../service/post.service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -31,6 +28,9 @@ import { UploadService } from '../service/upload.service';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { CallNumber } from '@ionic-native/call-number';
 import { MyPostPage } from '../pages/my-post/my-post';
+import * as lazyload from 'lazy-load-images';
+import { Push } from '@ionic-native/push';
+
 
 
 var config = {
@@ -42,11 +42,12 @@ var config = {
   messagingSenderId: "135274673331"
 };
 
+
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,LoginPage,RegisterPage,EmailregisterPage,FacebookRegisterPage,MyPostPage,
-    ChatPage,PostsPage,InscriptionPage,PhotoProfilPage,AddPostPage,DetailPostsPage,
+    AboutPage,LoginPage,RegisterPage,MyPostPage,
+    ChatPage,PostsPage,InscriptionPage,AddPostPage,DetailPostsPage,
     ContactPage,
     HomePage,
     TabsPage,
@@ -61,14 +62,14 @@ var config = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,LoginPage,RegisterPage,EmailregisterPage,FacebookRegisterPage,ChatPage,
-    PostsPage,InscriptionPage,PhotoProfilPage,AddPostPage,DetailPostsPage,MyPostPage,
+    AboutPage,LoginPage,RegisterPage,ChatPage,
+    PostsPage,InscriptionPage,AddPostPage,DetailPostsPage,MyPostPage,
     ContactPage,
     HomePage,
     TabsPage
   ],
   providers: [
-    StatusBar,
+    StatusBar,Push,
     SplashScreen,authService,PostService,Camera,UploadService,SocialSharing,CallNumber,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
