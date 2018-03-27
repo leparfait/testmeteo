@@ -28,8 +28,9 @@ import { UploadService } from '../service/upload.service';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { CallNumber } from '@ionic-native/call-number';
 import { MyPostPage } from '../pages/my-post/my-post';
-import * as lazyload from 'lazy-load-images';
 import { Push } from '@ionic-native/push';
+import { CacheModule } from 'ionic-cache';
+import { Network } from '@ionic-native/network';
 
 
 
@@ -55,7 +56,8 @@ var config = {
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(config),
-    IonicModule.forRoot(MyApp),    
+    IonicModule.forRoot(MyApp),
+    CacheModule.forRoot(),    
     AngularFireDatabaseModule,
     AngularFireAuthModule,
   ],
@@ -69,7 +71,7 @@ var config = {
     TabsPage
   ],
   providers: [
-    StatusBar,Push,
+    StatusBar,Push,Network,
     SplashScreen,authService,PostService,Camera,UploadService,SocialSharing,CallNumber,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

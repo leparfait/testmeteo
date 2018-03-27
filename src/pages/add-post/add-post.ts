@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams ,AlertController, LoadingController, DateTime} from 'ionic-angular';
+import { IonicPage, NavController, NavParams ,AlertController, LoadingController} from 'ionic-angular';
 import { Post } from '../../model/post.model';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { PostsPage } from '../posts/posts';
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase';
-import { Upload } from '../../model/image.model';
+
 import { UploadService } from '../../service/upload.service';
 import {Camera ,CameraOptions } from '@ionic-native/camera';
 import { TabsPage } from '../tabs/tabs';
-import { UidService } from '../../service/uid.service';
 
 /**
  * Generated class for the AddPostPage page.
@@ -35,7 +34,7 @@ export class AddPostPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public afAuth:AngularFireAuth,
               public uploadService:UploadService, public alertCtrl:AlertController, public loadingCtrl:LoadingController,
-              public db:AngularFireDatabase, public camera:Camera,public uidService:UidService) {
+              public db:AngularFireDatabase, public camera:Camera) {
                 
               this.getUsers();
          }
@@ -81,7 +80,7 @@ export class AddPostPage {
       post.userId = this.userId;
       post.status = true;
       post.dateCreation = new Date().getTime();
-      post.chatKey = this.uidService.uid();
+      post.chatKey = this.uid();
       //this.showAlert('test',this.currentUpload.url);
       post.imageUrl = this.imageUrl;
       this.db.list('posts/').push(post).then( ()=>{
@@ -135,7 +134,7 @@ export class AddPostPage {
      this.camera.getPicture(options).then(data=>{
      this.imageSrc = data;
      const storageRef = firebase.storage().ref();
-     storageRef.child('/uploads/'+this.uidService.uid()).child('pink.JPEG').putString(this.imageSrc,'base64',{contentType:'image/JPEG'})
+     storageRef.child('/uploads/'+this.uid()).child('pink.JPEG').putString(this.imageSrc,'base64',{contentType:'image/JPEG'})
     .then(data=>{
       this.imageUrl = data.downloadURL;
    });                  
@@ -145,8 +144,17 @@ export class AddPostPage {
        })
    } 
 
-
   cancel(){
     this.navCtrl.push(TabsPage);
+  }
+
+  uid() {
+    var d = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx'.replace(/[xy]/g, function (c) {
+      var r = (d + Math.random() * 16) % 16 | 0;
+      d = Math.floor(d / 16);
+      return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
   }
 }

@@ -10,6 +10,10 @@ import { HomePage } from '../pages/home/home';
 
 import { timer } from 'rxjs/Observable/timer';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
+import { CacheService } from "ionic-cache";
+import { Network } from '@ionic-native/network';
+import { ToastController } from 'ionic-angular';
+
 
 
 @Component({
@@ -22,11 +26,16 @@ export class MyApp {
 
   showSplash = true;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private afAuth:AngularFireAuth,
-              private push: Push) {
+  constructor(private toast: ToastController, private network: Network,platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private afAuth:AngularFireAuth,
+              private push: Push,cache: CacheService) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+      cache.setDefaultTTL(60 * 60 * 12);
+ 
+      // Keep our cached results when device is offline!
+      cache.setOfflineInvalidate(false);
+      
       statusBar.styleDefault();
       splashScreen.hide();
       timer(3000).subscribe(()=>this.showSplash = false)
@@ -41,6 +50,26 @@ export class MyApp {
   });
      
     this.pushSetup();
+  }
+
+  displayNetworkUpdate(connectionState: string){
+    let networkType = this.network.type;
+    this.toast.create({
+      message: `You are now ${connectionState} via ${networkType}`,
+      duration: 3000
+    }).present();
+  }
+  
+  ionViewDidEnter() {
+    this.network.onConnect().subscribe(data => {
+      console.log(data)
+      this.displayNetworkUpdate(data.type);
+    }, error => console.error(error));
+   
+    this.network.onDisconnect().subscribe(data => {
+      console.log(data)
+      this.displayNetworkUpdate(data.type);
+    }, error => console.error(error));
   }
   
   pushSetup(){

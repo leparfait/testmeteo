@@ -84,9 +84,10 @@ export class MyPostPage {
           text: 'Déja vendu',
           role: 'destructive',
           icon: 'md-checkmark-circle',
-          cssClass: 'VenduIcon',
+          cssClass: 'Vendu',
           handler: () => {
-            this.db.list('posts/').update(post.status,'false');
+            post.status = false;
+            firebase.database().ref().child('posts/').update(post);
             console.log('Delete clicked');
           }
         },
@@ -115,8 +116,8 @@ export class MyPostPage {
     actionSheet.present();
   }
 
-  deletePosts(posts){
-
+  deletePost(post){
+    firebase.database().ref().child('posts/').remove(post);
   }
 
 }

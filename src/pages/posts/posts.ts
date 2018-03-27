@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController, ToastController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Post } from '../../model/post.model';
 import { AddPostPage } from '../add-post/add-post';
 import { DetailPostsPage } from '../detail-posts/detail-posts';
 import * as firebase from 'firebase';
+import { Network } from '@ionic-native/network';
+
 
 
 /**
@@ -28,7 +30,8 @@ export class PostsPage {
   _chatSubscription : any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public afAuth:AngularFireAuth,
-              public modalCtrl: ModalController,public alertCtrl: AlertController) {
+              public modalCtrl: ModalController,public alertCtrl: AlertController,
+              private toast: ToastController, private network: Network,) {
 
     this.userVendor =  this.navParams.get('userVendor');
     this.afAuth.authState.subscribe(user =>{
@@ -87,6 +90,38 @@ export class PostsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PostsPage');
+    let networkType = this.network.type;
+    this.toast.create({
+      message: 'Vous etes',
+      cssClass:'toast',
+      showCloseButton:true,
+      position:"top",
+      duration: 8000,
+    }).present();
+  
+  }
+
+  displayNetworkUpdate(connectionState: string){
+    let networkType = this.network.type;
+    this.toast.create({
+      message: 'Vous etes',
+      cssClass:'toast',
+      showCloseButton:true,
+      position:"top",
+      duration: 8000,
+    }).present();
+  }
+  
+  ionViewDidEnter() {
+    this.network.onConnect().subscribe(data => {
+      console.log(data)
+      this.displayNetworkUpdate(data.type);
+    }, error => console.error(error));
+   
+    this.network.onDisconnect().subscribe(data => {
+      console.log(data)
+      this.displayNetworkUpdate(data.type);
+    }, error => console.error(error));
   }
 
 }

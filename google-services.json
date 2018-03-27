@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "135274673331",
+    "firebase_url": "https://blackmarket-3477c.firebaseio.com",
+    "project_id": "blackmarket-3477c",
+    "storage_bucket": "blackmarket-3477c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:135274673331:android:e757a946b3470355",
+        "android_client_info": {
+          "package_name": "io.CamerDeal.leparfait"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "135274673331-cv5njlchq47d88nm76ql7103plnih1vu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPOXs6Z4lwgUDmnQScy-OwSiQnu8JhOE4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
