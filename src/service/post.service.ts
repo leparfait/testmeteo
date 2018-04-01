@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { AngularFireDatabase ,AngularFireList } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Post } from "../model/post.model";
+import * as firebase from 'firebase';
 
 
 
@@ -33,4 +34,15 @@ export class PostService{
         //this.posts.push(post[] );
         this.db.list('/post').push(post);
     }
+
+    getAllPost(table: string){
+        firebase.database().ref().child(table).orderByChild('status').equalTo(true).on('value',snap=>{
+          const result = snap.val();
+          const keys  = Object.keys(result);
+           for(var i=0; i<keys.length ;i++){
+              var k= keys[i];
+              this.posts[i] = result[k];
+              }
+         });     
+      }
 }

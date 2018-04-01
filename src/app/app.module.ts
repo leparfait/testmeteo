@@ -31,7 +31,10 @@ import { MyPostPage } from '../pages/my-post/my-post';
 import { Push } from '@ionic-native/push';
 import { CacheModule } from 'ionic-cache';
 import { Network } from '@ionic-native/network';
-
+import { SuperTabsModule } from 'ionic2-super-tabs';
+import { StartTabPage } from '../pages/start-tab/start-tab';
+import { TrocPage } from '../pages/troc/troc';
+import { DemandePage } from '../pages/demande/demande';
 
 
 var config = {
@@ -47,9 +50,9 @@ var config = {
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,LoginPage,RegisterPage,MyPostPage,
-    ChatPage,PostsPage,InscriptionPage,AddPostPage,DetailPostsPage,
-    ContactPage,
+    LoginPage,RegisterPage,
+    ChatPage,InscriptionPage,AddPostPage,DetailPostsPage,
+    ContactPage,StartTabPage,AboutPage,MyPostPage,
     HomePage,
     TabsPage,
   ],
@@ -57,16 +60,17 @@ var config = {
     BrowserModule,
     AngularFireModule.initializeApp(config),
     IonicModule.forRoot(MyApp),
-    CacheModule.forRoot(),    
+    CacheModule.forRoot(),
+    SuperTabsModule.forRoot(),    
     AngularFireDatabaseModule,
     AngularFireAuthModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,LoginPage,RegisterPage,ChatPage,
-    PostsPage,InscriptionPage,AddPostPage,DetailPostsPage,MyPostPage,
-    ContactPage,
+    LoginPage,RegisterPage,ChatPage,
+    InscriptionPage,AddPostPage,DetailPostsPage,
+    ContactPage,StartTabPage,AboutPage,MyPostPage,
     HomePage,
     TabsPage
   ],

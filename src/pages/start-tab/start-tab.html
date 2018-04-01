@@ -1,0 +1,19 @@
+<!--
+  Generated template for the StartTabPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header >
+    <ion-navbar color="darkness">
+     <ion-title >{{ pages[selectedTab].title }}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content >
+  <super-tabs tabsPlacement="top" toolbarBackground="darkness" toolbarColor="light" indicatorColor="light"
+  (tabSelect)="onTabSelect($event)">
+  <super-tab *ngFor="let page of pages" [title]="page.title" [root]="page.pageName" [id]="page.id"></super-tab>
+ </super-tabs>
+
+</ion-content>
